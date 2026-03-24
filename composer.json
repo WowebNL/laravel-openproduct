@@ -1,0 +1,45 @@
+{
+    "name": "woweb/laravel-openproduct",
+    "description": "Laravel wrapper voor de Open Product API",
+    "type": "library",
+    "license": "EUPL-1.2",
+    "homepage": "https://github.com/WowebNL/laravel-openproduct",
+    "support": {
+        "source": "https://github.com/WowebNL/laravel-openproduct"
+    },
+    "authors": [
+        {
+            "name": "Michel Verhoeven",
+            "email": "info@woweb.nl"
+        }
+    ],
+    "require": {
+        "php": "^8.2",
+        "illuminate/http": "^10.0|^11.0",
+        "illuminate/support": "^10.0|^11.0",
+        "illuminate/validation": "^10.0|^11.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^10.0|^11.0",
+        "orchestra/testbench": "^8.0|^9.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Woweb\\Openproduct\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Woweb\\Openproduct\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Woweb\\Openproduct\\OpenProductServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
