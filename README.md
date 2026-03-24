@@ -4,54 +4,54 @@
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/woweb/laravel-openproduct.svg)](https://packagist.org/packages/woweb/laravel-openproduct)
 [![PHP Version](https://img.shields.io/packagist/php-v/woweb/laravel-openproduct.svg)](https://packagist.org/packages/woweb/laravel-openproduct)
 
-Laravel wrapper voor de Open Product API (VNG/Common Ground).
+Laravel wrapper for the Product API and Producttypes API based on [Open Product](https://github.com/maykinmedia/open-product).
 
-## Vereisten
+## Requirements
 
-- PHP 8.2 of hoger
-- Laravel 10 of hoger
+- PHP 8.2 or higher
+- Laravel 10 or higher
 
-## Installatie
+## Installation
 
 ```bash
 composer require woweb/laravel-openproduct
 ```
 
-De service provider wordt automatisch geregistreerd via Laravel's package auto-discovery.
+The service provider is registered automatically via Laravel's package auto-discovery.
 
-Publiceer de configuratie:
+Publish the configuration:
 
 ```bash
 php artisan vendor:publish --provider="Woweb\Openproduct\OpenProductServiceProvider"
 ```
 
-## Configuratie
+## Configuration
 
-Voeg de volgende variabelen toe aan je `.env`:
+Add the following variables to your `.env`:
 
 ```env
-OPENPRODUCT_URL=https://jouw-openproduct-instantie.nl/open-product/
-OPENPRODUCT_AUTH_TOKEN=jouw-api-token
+OPENPRODUCT_URL=https://your-openproduct-instance.nl/open-product/
+OPENPRODUCT_AUTH_TOKEN=your-api-token
 ```
 
-Of pas `config/openproduct.php` direct aan.
+Or edit `config/openproduct.php` directly.
 
-## Gebruik
+## Usage
 
-### Producten
+### Products
 
 ```php
 use Woweb\Openproduct\Api\Producten;
 
-// Alle producten ophalen
+// Retrieve all products
 $producten = Producten::getAllProducten();
 
-// Enkel product ophalen
+// Retrieve a single product
 $product = Producten::getSingleProduct('550e8400-e29b-41d4-a716-446655440000');
 
-// Product aanmaken
+// Create a product
 $product = Producten::createProduct([
-    'naam'              => 'Parkeervergunning',
+    'naam'              => 'Parking permit',
     'start_datum'       => '2026-01-01',
     'eind_datum'        => '2026-12-31',
     'producttype_uuid'  => '550e8400-e29b-41d4-a716-446655440000',
@@ -62,32 +62,32 @@ $product = Producten::createProduct([
     'dataobject'        => ['location' => 'Nijmegen'],
 ]);
 
-// Product bijwerken (status)
+// Update a product (status)
 $product = Producten::updateProduct('550e8400-e29b-41d4-a716-446655440000', [
     'status' => 'ingetrokken',
 ]);
 ```
 
-### Producttypen
+### Product types
 
 ```php
 use Woweb\Openproduct\Api\ProductTypen;
 
-// Alle producttypen ophalen
+// Retrieve all product types
 $typen = ProductTypen::getAllProducttypes();
 
-// Enkel producttype ophalen
+// Retrieve a single product type
 $type = ProductTypen::getSingleProducttype('550e8400-e29b-41d4-a716-446655440001');
 
-// Producttype bijwerken
+// Update a product type
 $type = ProductTypen::updateProducttype('550e8400-e29b-41d4-a716-446655440001', [
-    'naam' => 'Gewijzigd type',
+    'naam' => 'Updated type',
 ]);
 ```
 
-### Foutafhandeling
+### Error handling
 
-Het package gooit eigen exceptions:
+The package throws its own exceptions:
 
 ```php
 use Woweb\Openproduct\Exceptions\OpenProductException;
@@ -96,21 +96,21 @@ use Woweb\Openproduct\Exceptions\OpenProductValidationException;
 try {
     $product = Producten::createProduct($data);
 } catch (OpenProductValidationException $e) {
-    // Validatiefout in de meegegeven data
+    // Validation error in the provided data
     logger()->error($e->getMessage());
 } catch (OpenProductException $e) {
-    // HTTP-fout van de API (bijv. 404, 500)
-    logger()->error('API fout ' . $e->getCode() . ': ' . $e->getMessage());
+    // HTTP error from the API (e.g. 404, 500)
+    logger()->error('API error ' . $e->getCode() . ': ' . $e->getMessage());
 }
 ```
 
-## Testen
+## Testing
 
 ```bash
 composer install
 vendor/bin/phpunit
 ```
 
-## Licentie
+## License
 
-EUPL-1.2. Zie [LICENSE](LICENSE) voor details.
+EUPL-1.2. See [LICENSE](LICENSE) for details.
