@@ -41,4 +41,37 @@ class OpenProductConnectionTest extends TestCase
             return $request->hasHeader('Content-Type', 'application/json');
         });
     }
+
+    public function test_connection_sets_accept_language_header(): void
+    {
+        Http::fake(['*' => Http::response([], 200)]);
+
+        OpenProductConnection::getConnection()->get('test');
+
+        Http::assertSent(function ($request) {
+            return $request->hasHeader('Accept-Language', 'nl');
+        });
+    }
+
+    public function test_multipart_connection_sets_authorization_header(): void
+    {
+        Http::fake(['*' => Http::response([], 200)]);
+
+        OpenProductConnection::getMultipartConnection()->get('test');
+
+        Http::assertSent(function ($request) {
+            return $request->hasHeader('Authorization', 'Token test-token');
+        });
+    }
+
+    public function test_multipart_connection_does_not_set_json_content_type(): void
+    {
+        Http::fake(['*' => Http::response([], 200)]);
+
+        OpenProductConnection::getMultipartConnection()->get('test');
+
+        Http::assertSent(function ($request) {
+            return ! $request->hasHeader('Content-Type', 'application/json');
+        });
+    }
 }
