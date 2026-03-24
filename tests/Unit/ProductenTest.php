@@ -55,7 +55,7 @@ class ProductenTest extends TestCase
         $result = Producten::createProduct($this->validProductData());
 
         $this->assertIsArray($result);
-        Http::assertSent(fn($req) => $req->isPost() && str_contains($req->url(), 'producten/api/v1/producten'));
+        Http::assertSent(fn($req) => $req->method() === 'POST' && str_contains($req->url(), 'producten/api/v1/producten'));
     }
 
     public function test_create_product_throws_validation_exception_for_missing_naam(): void
