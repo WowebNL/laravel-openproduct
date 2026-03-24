@@ -16,7 +16,7 @@ Laravel wrapper for the Product API and Producttypes API based on [Open Product]
 ## Requirements
 
 - PHP 8.2 or higher
-- Laravel 10, 11, or 12
+- Laravel 8, 9, 10, 11, or 12
 
 ## Installation
 
