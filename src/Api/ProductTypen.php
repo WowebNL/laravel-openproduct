@@ -13,14 +13,8 @@ class ProductTypen
 
     public static function list(array $filters = []): array
     {
-        $request = OpenProductConnection::getConnection();
-
-        if (! empty($filters)) {
-            $request = $request->withQueryParameters($filters);
-        }
-
         return self::validateResponse(
-            $request->get(self::API_ENDPOINT . 'producttypen')
+            OpenProductConnection::getConnection()->get(self::API_ENDPOINT . 'producttypen', $filters)
         )->json();
     }
 
@@ -152,14 +146,8 @@ class ProductTypen
 
     public static function getContent(string $uuid, array $filters = []): array
     {
-        $request = OpenProductConnection::getConnection();
-
-        if (! empty($filters)) {
-            $request = $request->withQueryParameters($filters);
-        }
-
         return self::validateResponse(
-            $request->get(self::API_ENDPOINT . 'producttypen/' . $uuid . '/content')
+            OpenProductConnection::getConnection()->get(self::API_ENDPOINT . 'producttypen/' . $uuid . '/content', $filters)
         )->json();
     }
 

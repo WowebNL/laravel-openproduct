@@ -13,14 +13,8 @@ class Producten
 
     public static function list(array $filters = []): array
     {
-        $request = OpenProductConnection::getConnection();
-
-        if (! empty($filters)) {
-            $request = $request->withQueryParameters($filters);
-        }
-
         return self::validateResponse(
-            $request->get(self::API_ENDPOINT . 'producten')
+            OpenProductConnection::getConnection()->get(self::API_ENDPOINT . 'producten', $filters)
         )->json();
     }
 

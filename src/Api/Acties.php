@@ -13,14 +13,8 @@ class Acties
 
     public static function list(array $filters = []): array
     {
-        $request = OpenProductConnection::getConnection();
-
-        if (! empty($filters)) {
-            $request = $request->withQueryParameters($filters);
-        }
-
         return self::validateResponse(
-            $request->get(self::API_ENDPOINT . 'acties')
+            OpenProductConnection::getConnection()->get(self::API_ENDPOINT . 'acties', $filters)
         )->json();
     }
 

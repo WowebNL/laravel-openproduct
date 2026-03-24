@@ -13,14 +13,8 @@ class Schemas
 
     public static function list(array $filters = []): array
     {
-        $request = OpenProductConnection::getConnection();
-
-        if (! empty($filters)) {
-            $request = $request->withQueryParameters($filters);
-        }
-
         return self::validateResponse(
-            $request->get(self::API_ENDPOINT . 'schemas')
+            OpenProductConnection::getConnection()->get(self::API_ENDPOINT . 'schemas', $filters)
         )->json();
     }
 

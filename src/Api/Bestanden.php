@@ -13,14 +13,8 @@ class Bestanden
 
     public static function list(array $filters = []): array
     {
-        $request = OpenProductConnection::getConnection();
-
-        if (! empty($filters)) {
-            $request = $request->withQueryParameters($filters);
-        }
-
         return self::validateResponse(
-            $request->get(self::API_ENDPOINT . 'bestanden')
+            OpenProductConnection::getConnection()->get(self::API_ENDPOINT . 'bestanden', $filters)
         )->json();
     }
 
